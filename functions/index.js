@@ -7,3 +7,14 @@ const functions = require("firebase-functions");
 //   functions.logger.info("Hello logs!", {structuredData: true});
 //   response.send("Hello from Firebase!");
 // });
+ const app =  require("express")();
+ const {admin} =  require("./utils/admin")
+
+ app.post("/createuser",(req,res) =>{
+     const inputs = req.body;
+     return admin.auth().createUser({
+         email: inputs.email,
+         password : inputs.password
+     })
+ })
+ exports.api = functions.https.onRequest(app);
